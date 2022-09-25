@@ -1,21 +1,37 @@
-
 <template>
-    <v-app-bar>
-        <v-app-bar-title>
-            Home
-        </v-app-bar-title>
-    </v-app-bar>
+  <v-app>
+    <v-main>
+      <v-app-bar color="info">
+        <v-btn>
+          <v-icon>
+            mdi-home
+          </v-icon>
+        </v-btn>
+        <v-btn>
+          <v-icon>
+            mdi-format-list-bulleted
+          </v-icon>
+        </v-btn>
+        <v-btn>
+          <v-icon>
+            mdi-map-outline
+          </v-icon>
+        </v-btn>
+      </v-app-bar>
+    </v-main>
+  </v-app>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 
-    export default defineComponent({
-        name: 'App',
-        data() {
-            return {
+export default defineComponent({
+  name: 'App',
 
-            }
-        }
-    });
+  data () {
+    return {
+      //
+    }
+  },
+})
 </script>
