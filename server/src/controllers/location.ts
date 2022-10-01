@@ -1,5 +1,6 @@
 import Router  from "express-promise-router";
 import locationModel from "../models/location";
+import { locationService } from "../services";
 import { Location } from "../types/location";
 
 export default () => { 
@@ -10,7 +11,7 @@ export default () => {
     })
 
     api.get('/', async (req, res) => {
-        const locations: Location[] = await locationModel.find({});
+        const locations: Location[] = await locationService.getLocations();
         res.json(locations);
     });
 
@@ -18,8 +19,7 @@ export default () => {
         const locationData: Location = req.body; 
 
         try {
-            const location = new locationModel( locationData );
-            await location.save();
+            await locationService.createLocation(locationData);
             res.sendStatus(200);
         } catch(err: any){
             res.status(400).send(err.message);
