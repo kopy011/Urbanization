@@ -2,7 +2,7 @@
     <v-container>
       <v-row>
         <v-col cols="6">
-          <v-table fixed-header density="comfortable">
+          <v-table fixed-header>
             <thead>
               <tr>
                 <th>
