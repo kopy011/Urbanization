@@ -4,9 +4,12 @@ import api from "./controllers"
 import locationModel from "../src/models/location"
 import mongoose from "mongoose";
 
+var cors = require('cors')
 
 const app: Express = express();
 const port: number = 8080;
+
+app.use(cors());
 
 app.use(express.json());
 

@@ -11,7 +11,6 @@ export default () => {
 
     api.get('/', async (req, res) => {
         const locations: Location[] = await locationModel.find({});
-
         res.json(locations);
     });
 
