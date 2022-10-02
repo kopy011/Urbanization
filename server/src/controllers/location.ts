@@ -15,8 +15,11 @@ export default () => {
         res.json(locations);
     });
 
-    api.put('/create', async (req, res) => {
-        const locationData: Location = req.body; 
+    api.post('/save', async (req, res) => {
+        const locationData: Location = req.body;
+        
+        //csekkolni van e id-ja 
+        //ha van update ha nincs create
 
         try {
             await locationService.createLocation(locationData);
@@ -24,7 +27,7 @@ export default () => {
         } catch(err: any){
             res.status(400).send(err.message);
         }
-    })
+    });
 
     return api;
 };

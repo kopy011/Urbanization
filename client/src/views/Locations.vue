@@ -2,7 +2,7 @@
     <v-container>
       <v-row>
         <v-col cols="6">
-          <v-table fixed-header>
+          <v-table>
             <thead>
               <tr>
                 <th>
@@ -31,17 +31,17 @@
         </v-col>
         <v-spacer/>
         <v-col cols="3">
-          <v-form v-model="valid">
+          <v-form v-model="valid" ref="form">
             <v-container>
-              <v-text-field label="Name" prepend-inner-icon="mdi-tag-outline" :rules="textRules"/>
-              <v-text-field label="Lat" prepend-inner-icon ="mdi-counter" type="number" :rules="numberRules"/>
-              <v-text-field label="Lon" prepend-inner-icon ="mdi-counter" type="number" :rules="numberRules"/>
-              <v-text-field label="Diagonal" prepend-inner-icon ="mdi-arrow-left-right-bold-outline" type="number" :rules="numberRules"/>
+              <v-text-field label="Name" prepend-inner-icon="mdi-tag-outline" :rules="[required]" v-model="edited.name"/>
+              <v-text-field label="Lat" prepend-inner-icon ="mdi-counter" type="number" :rules="[required]" v-model="edited.lat"/>
+              <v-text-field label="Lon" prepend-inner-icon ="mdi-counter" type="number" :rules="[required]" v-model="edited.lon"/>
+              <v-text-field label="Diagonal" prepend-inner-icon ="mdi-arrow-left-right-bold-outline" type="number" :rules="[required, positiveNumber]" v-model="edited.diagonal"/>
               <v-row class="mt-5">
                 <v-btn color="info">Import</v-btn>
                 <v-spacer />
-                <v-btn color="error">Reset</v-btn>
-                <v-btn color="success" class="ml-3">Save</v-btn>
+                <v-btn color="error" @click="resetForm()">Reset</v-btn>
+                <v-btn color="success" class="ml-3" @click="save()">Save</v-btn>
               </v-row>
             </v-container>
           </v-form>
@@ -51,7 +51,7 @@
 </template>
   
   <script lang="ts">
-  import { mapActions, mapState, mapStores } from 'pinia';
+  import { mapActions, mapGetters, mapState, mapStores } from 'pinia';
   import { defineComponent } from 'vue';
   import { locationStore } from '@/stores/location';
   
@@ -59,29 +59,36 @@
     name: 'Locations',
 
     data() {
-        return{
+        return {
           valid: false as boolean,
-          textRules: [
-            (v: string) => !!v || 'Field is requiered!'
-          ],
-          numberRules: [
-            (v: number) => !!v || 'Field is requiered!',
-            (v: number) => v >= 0 || 'Only positive numbers are accepted!'
-          ]
+          required: (v: any) => !!v || 'Field is requiered!',
+          positiveNumber: (v: number) => v >= 0 || 'Number must be greater than 0!'
         }
     },
 
     async mounted(){
-      await this.getLocations();
+      //valamiért itt valami még fos talán egy gettert írni rá
+      await this.refresh();
     },
 
     computed: {
       ...mapStores(locationStore),
-      ...mapState(locationStore, ['locations'])
+      ...mapState(locationStore, ['locations','edited'])
     },
 
     methods: {
-      ...mapActions(locationStore, ['getLocations'])
+      ...mapActions(locationStore, ['getLocations', 'resetForm', 'saveLocation']),
+      async save(){
+        (this.$refs.form as any).validate();
+
+        if(this.valid){
+          await this.saveLocation();
+          await this.refresh();
+        }
+      },
+      async refresh(){
+        await this.getLocations();
+      }
     }
 
   });
