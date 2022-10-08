@@ -1,5 +1,4 @@
 import Router  from "express-promise-router";
-import locationModel from "../models/location";
 import { locationService } from "../services";
 import { Location } from "../types/location";
 
@@ -27,6 +26,13 @@ export default () => {
         } catch(err: any){
             res.status(400).send(err.message);
         }
+    });
+
+    api.post('/import', async (req, res) => {
+
+        console.log('import')
+        console.log(req.body);
+        res.sendStatus(200);
     });
 
     return api;
