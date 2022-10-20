@@ -63,21 +63,36 @@ export const locationStore = defineStore('location', {
                 return;
             }
 
-            const text = await file.text();
+            let data = (await file.text()).split('\n');
+            const locations: Location[] = [];
 
-            //valamiért nem megy át a végpontra, JSON.parse hoba
+            data = data.splice(1, data.length-1);
 
-            // await fetch('http://localhost:8080/api/location/import', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: {fileText: text}
-            // }).then(response => {
-            //     if (response.ok) {
-            //         window.alert('imported successfully')
-            //     }
-            // });
+            data.forEach((line: string) => {
+                line.replace("\r", "");
+
+                const lineData = line.split(";");
+
+                locations.push({
+                    idx: lineData[0],
+                    lat: parseFloat(lineData[1]),
+                    lon: parseFloat(lineData[2]),
+                    name: lineData[3],
+                    diagonal: parseInt(lineData[4])
+                })
+            });
+
+            await fetch('http://localhost:8080/api/location/import', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(locations)
+            }).then(response => {
+                if (response.ok) {
+                    window.alert('imported successfully')
+                }
+            });
         }
     }
 });

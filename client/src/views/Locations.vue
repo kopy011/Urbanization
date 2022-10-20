@@ -33,6 +33,7 @@
         <v-col cols="3">
           <v-form v-model="valid" ref="form">
             <v-container>
+              <v-text-field label="Id" prepend-inner-icon="mdi-identifier" :rules="[required]" v-model="edited.idx"/>
               <v-text-field label="Name" prepend-inner-icon="mdi-tag-outline" :rules="[required]" v-model="edited.name"/>
               <v-text-field label="Lat" prepend-inner-icon ="mdi-counter" type="number" :rules="[required]" v-model="edited.lat"/>
               <v-text-field label="Lon" prepend-inner-icon ="mdi-counter" type="number" :rules="[required]" v-model="edited.lon"/>
@@ -110,6 +111,7 @@
       async upload(){
         await this.importLocations(this.file[0]);
         this.file = [];
+        await this.refresh();
       }
     }
 

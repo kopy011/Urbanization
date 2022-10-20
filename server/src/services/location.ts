@@ -17,4 +17,15 @@ export class LocationService {
             throw ex;
         }
     }
+
+    async importLocations(locations: Location[]): Promise<void> {
+        try{
+            for(let i=0; i<locations.length; i++){
+                const mongoLocation = new locationModel(locations[i]);
+                await mongoLocation.save();
+            }
+        } catch(ex){
+            throw ex;
+        }
+    }
 }

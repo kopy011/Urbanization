@@ -29,10 +29,13 @@ export default () => {
     });
 
     api.post('/import', async (req, res) => {
-
-        console.log('import')
-        console.log(req.body);
-        res.sendStatus(200);
+        const locations: Location[] = req.body; 
+        try {
+            await locationService.importLocations(locations);
+            res.sendStatus(200);
+        } catch(err: any){
+            res.status(400).send(err.message);
+        }
     });
 
     return api;
