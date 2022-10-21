@@ -1,7 +1,8 @@
 import type { Location } from '@/types/location';
 import { defineStore } from 'pinia';
 
-export const locationStore = defineStore('location', {
+export const locationStore = defineStore({
+    id: 'location',
     state: () => ({
         locations: [] as Location[],
         edited: {} as Location
