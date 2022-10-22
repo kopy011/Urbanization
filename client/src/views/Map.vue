@@ -29,8 +29,6 @@ export default defineComponent({
   },
 
   async mounted() {
-    await this.getLocations();
-
     mapboxgl.accessToken = this.api_key;
 
     const map = new mapboxgl.Map({
@@ -40,11 +38,6 @@ export default defineComponent({
       zoom: 15,
     });
 
-  },
-
-
-  methods: {
-    ...mapActions(locationStore, ['getLocations'])
   }
 });
 </script>

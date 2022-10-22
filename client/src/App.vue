@@ -24,7 +24,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { mapActions } from 'pinia';
+import { defineComponent } from 'vue';
+import {locationStore} from './stores/location'
 
 export default defineComponent({
   name: 'App',
@@ -35,7 +37,12 @@ export default defineComponent({
     }
   },
 
+  async mounted(){
+    await this.getLocations();
+  },
+
   methods: {
+    ...mapActions(locationStore, ['getLocations']),
     openView(view: string){
       this.$router.push({name: view})
     }

@@ -2,7 +2,7 @@
     <v-container>
       <v-row>
         <v-col cols="6">
-          <v-table>
+          <v-table :height="500" fixed-header>
             <thead>
               <tr>
                 <th>
@@ -64,7 +64,7 @@
 </template>
   
   <script lang="ts">
-  import { mapActions, mapState, mapStores } from 'pinia';
+  import { mapActions, mapState, mapStores, mapWritableState } from 'pinia';
   import { defineComponent } from 'vue';
   import { locationStore } from '@/stores/location';
   
@@ -81,14 +81,9 @@
         }
     },
 
-    async mounted(){
-      //valamiért itt valami még fos talán egy gettert írni rá
-      await this.refresh();
-    },
-
     computed: {
-      ...mapStores(locationStore),
-      ...mapState(locationStore, ['locations', 'edited'])
+      ...mapState(locationStore, ['locations']),
+      ...mapWritableState(locationStore, ['edited'])
     },
 
     methods: {
@@ -98,11 +93,8 @@
 
         if(this.valid){
           await this.saveLocation();
-          await this.refresh();
+          window.location.reload();
         }
-      },
-      async refresh(){
-        await this.getLocations();
       },
       cancelUploadMode(){
         this.uploadMode = false;
@@ -111,7 +103,6 @@
       async upload(){
         await this.importLocations(this.file[0]);
         this.file = [];
-        await this.refresh();
       }
     }
 
