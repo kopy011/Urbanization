@@ -35,7 +35,7 @@ export const locationStore = defineStore({
         },
 
         resetForm() {
-            this.$state.edited = {}
+            this.$state.edited = {lat: 0, lon: 0, diagonal: 0}
         },
 
         async saveLocation() {
@@ -55,6 +55,8 @@ export const locationStore = defineStore({
                     window.alert('saved successfully')
                 }
             });
+
+            this.resetForm();
         },
 
         async importLocations(file: File) {

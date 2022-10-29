@@ -21,6 +21,9 @@ const locationSchema = new mongoose.Schema<Location>({
     diagonal: {
         type: Number,
         required: true
+    },
+    description: {
+        type: String
     }
 })
 

@@ -17,6 +17,9 @@
                 <th>
                   Lon
                 </th>
+                <th>
+                  Description
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -25,6 +28,7 @@
                 <td> {{ location.diagonal }}</td>
                 <td> {{ location.lat }}</td>
                 <td> {{ location.lon }}</td>
+                <td> {{ location.description }}</td>
               </tr>
             </tbody>
           </v-table>
@@ -38,6 +42,7 @@
               <v-text-field label="Lat" prepend-inner-icon ="mdi-counter" type="number" :rules="[required]" v-model="edited.lat"/>
               <v-text-field label="Lon" prepend-inner-icon ="mdi-counter" type="number" :rules="[required]" v-model="edited.lon"/>
               <v-text-field label="Diagonal" prepend-inner-icon ="mdi-arrow-left-right-bold-outline" type="number" :rules="[required, positiveNumber]" v-model="edited.diagonal"/>
+              <v-text-field label="Description" prepend-inner-icon ="mdi-clipboard-text" :rules="[required]" v-model="edited.description"/>
               <v-row class="mt-5">
                 <v-btn color="info" @click="uploadMode=true">Import</v-btn>
                 <v-spacer />

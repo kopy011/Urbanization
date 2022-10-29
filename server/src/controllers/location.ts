@@ -1,8 +1,8 @@
-import Router  from "express-promise-router";
+import Router from "express-promise-router";
 import { locationService } from "../services";
 import { Location } from "../types/location";
 
-export default () => { 
+export default () => {
     const api = Router();
 
     api.get('/hello-world', async (req, res) => {
@@ -16,24 +16,30 @@ export default () => {
 
     api.post('/save', async (req, res) => {
         const locationData: Location = req.body;
-        
+
         //csekkolni van e id-ja 
         //ha van update ha nincs create
 
         try {
-            await locationService.createLocation(locationData);
-            res.sendStatus(200);
-        } catch(err: any){
+            if (locationData._id) {
+                console.log("hasId");
+                await locationService.updateLocation(locationData);
+                res.sendStatus(200);
+            } else {
+                await locationService.createLocation(locationData);
+                res.sendStatus(200);
+            }
+        } catch (err: any) {
             res.status(400).send(err.message);
         }
     });
 
     api.post('/import', async (req, res) => {
-        const locations: Location[] = req.body; 
+        const locations: Location[] = req.body;
         try {
             await locationService.importLocations(locations);
             res.sendStatus(200);
-        } catch(err: any){
+        } catch (err: any) {
             res.status(400).send(err.message);
         }
     });

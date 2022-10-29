@@ -18,6 +18,24 @@ export class LocationService {
         }
     }
 
+    async updateLocation(locationData: Location): Promise<void> {
+        try{
+            const location = await locationModel.findOne({_id: locationData._id});
+
+            if(!location){
+                throw new Error('Location not found with id: ' + locationData._id);
+            }
+
+            console.log(locationData);
+
+            Object.assign(location, locationData);
+            console.log(location);
+            await location.save();
+        } catch(ex){
+            throw ex;
+        }
+    }
+
     async importLocations(locations: Location[]): Promise<void> {
         try{
             for(let i=0; i<locations.length; i++){
