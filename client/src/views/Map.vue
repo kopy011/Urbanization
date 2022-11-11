@@ -33,7 +33,7 @@ export default defineComponent({
 
   data() {
     return {
-      api_key: "api_key" as string
+      api_key: "pk.eyJ1IjoiYmFsaW50OTgiLCJhIjoiY2tyeGZ5ZnNkMDhwaDJxbXJienVjZGtxYiJ9.Gixcjxo2t3df_-rFdl8Hhw" as string
     }
 
   },
@@ -114,7 +114,6 @@ export default defineComponent({
       const locationToEdit: Location = this.locations.find((location) => location._id == id) ?? {} as Location;
       this.setEdited(JSON.parse(JSON.stringify(locationToEdit)));
       const desc = prompt('Enter description');
-      console.log(desc);
       this.edited.description = desc ?? "sample";
       await this.saveLocation();
     }

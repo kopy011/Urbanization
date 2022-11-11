@@ -25,11 +25,8 @@ export class LocationService {
             if(!location){
                 throw new Error('Location not found with id: ' + locationData._id);
             }
-
-            console.log(locationData);
-
+            
             Object.assign(location, locationData);
-            console.log(location);
             await location.save();
         } catch(ex){
             throw ex;
