@@ -33,7 +33,7 @@ export default defineComponent({
 
   data() {
     return {
-      api_key: "pk.eyJ1IjoiYmFsaW50OTgiLCJhIjoiY2tyeGZ5ZnNkMDhwaDJxbXJienVjZGtxYiJ9.Gixcjxo2t3df_-rFdl8Hhw" as string
+      api_key: "api_key" as string
     }
 
   },
